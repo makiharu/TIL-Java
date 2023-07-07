@@ -1,48 +1,88 @@
 import java.util.*;
-//import java.util.Scanner;
+
 public class Main {
     public static void main(String... args) {
-        Scanner sc = new Scanner(System.in);
+        // 【マップの扱い 3】マップの判定・縦横斜め
+        var sc = new Scanner(System.in);
+
         var H = sc.nextInt();
         var W = sc.nextInt();
-        var arr = new String[H][W];
+        var S = new String[H][W];
 
-        for(var i=0; i < H; i ++) {
-            arr[i] = sc.next().split("");
+        for (var i = 0; i < H; i++) {
+            S[i] = sc.next().split("");
         }
+
         var y = sc.nextInt();
         var x = sc.nextInt();
 
-        // y軸の変化
-        for(var i=-1; i<2; i++) {
-            if(arr[y+i][x].equals("#")) {
-                arr[y+i][x]=".";
+        // たて
+        for(var i=0; i < H; i++) {
+            if(S[y+i][x].equals("#")) {
+                S[y+i][x] = ".";
             } else {
-                arr[y+i][x]="#";
+                S[y+i][x] = "#";
+            }
+        }
+        // よこ
+        for(var i=0; i < W; i++) {
+            if(S[y][x+i].equals("#")) {
+                S[y][x+i] = ".";
+            } else {
+                S[y][x+i] = "#";
             }
         }
 
-        // x軸の変化
-        for(var i=-1; i<2; i++) {
-            if(arr[y][x+i].equals("#")) {
-                arr[y][x+i]=".";
-            } else {
-                arr[y][x+i]="#";
+        // 斜め
+        for(var i=1; i< Math.min(H,W); i++) {
+            if(y+i < H) {
+                if(x+i < W) {
+                    if(S[y+i][x+i].equals("#")) {
+                        S[y+i][x+i] = ".";
+                    } else {
+                        S[y+i][x+i] = "#";
+                    }
+                }
+
+                if(0<= x-i) {
+                    if(S[y+i][x-i].equals("#")) {
+                        S[y+i][x-i] = ".";
+                    } else {
+                        S[y+i][x-i] = "#";
+                    }
+                }
+            }
+
+            if(0<=y-i) {
+                if(x+i < W) {
+                    if(S[y+i][x+i].equals("#")) {
+                        S[y+i][x+i] = ".";
+                    } else {
+                        S[y+i][x+i] = "#";
+                    }
+                }
+                if(0<= x-i) {
+                    if(S[y+i][x-i].equals("#")) {
+                        S[y+i][x-i] = ".";
+                    } else {
+                        S[y+i][x-i] = "#";
+                    }
+                }
             }
         }
 
-        if(arr[y][x].equals("#")) {
-            arr[y][x] = ".";
+
+        if (S[y][x].equals(".")) {
+            S[y][x] = "#";
         } else {
-            arr[y][x] = "#";
+            S[y][x] = ".";
         }
 
-        for(var i=0; i < H;i++) {
-            for(var j=0; j < W; j++) {
-                System.out.print(arr[i][j]);
+        for (var i = 0; i < H; i++) {
+            for (var j = 0; j < W; j++) {
+                System.out.print(S[i][j]);
             }
             System.out.println();
         }
-
     }
 }
