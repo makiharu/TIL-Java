@@ -1,33 +1,48 @@
 import java.util.*;
+//import java.util.Scanner;
 public class Main {
     public static void main(String... args) {
-        //code22-1
         Scanner sc = new Scanner(System.in);
-
         var H = sc.nextInt();
         var W = sc.nextInt();
-        var S = new String[H][W];
+        var arr = new String[H][W];
 
-        for(var i=0; i < H; i++) {
-            S[i] = sc.next().split("");
+        for(var i=0; i < H; i ++) {
+            arr[i] = sc.next().split("");
         }
-
         var y = sc.nextInt();
         var x = sc.nextInt();
 
-        if(S[y][x].equals(".")) {
-            S[y][x] = "#";
-        } else{
-            S[y][x] = ".";
+        // y軸の変化
+        for(var i=-1; i<2; i++) {
+            if(arr[y+i][x].equals("#")) {
+                arr[y+i][x]=".";
+            } else {
+                arr[y+i][x]="#";
+            }
         }
 
-        for(var i=0; i < H; i++) {
+        // x軸の変化
+        for(var i=-1; i<2; i++) {
+            if(arr[y][x+i].equals("#")) {
+                arr[y][x+i]=".";
+            } else {
+                arr[y][x+i]="#";
+            }
+        }
+
+        if(arr[y][x].equals("#")) {
+            arr[y][x] = ".";
+        } else {
+            arr[y][x] = "#";
+        }
+
+        for(var i=0; i < H;i++) {
             for(var j=0; j < W; j++) {
-                System.out.print(S[i][j]);
+                System.out.print(arr[i][j]);
             }
             System.out.println();
         }
-
 
     }
 }
