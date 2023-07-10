@@ -1,50 +1,33 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        var H = sc.nextInt();
-        var W = sc.nextInt();
-        var S = new String[H][W];
-        var move = new int[]{-1, 1};
+        String csvFile = "product-list.csv";
+        String line;
+        String csvSplitBy = ",";
 
-        // 二次元配列作成
-        for(var i=0; i < H; i++) {
-            S[i] = sc.next().split("");
-        }
-        var y = sc.nextInt();
-        var x = sc.nextInt();
+        int sum = 0;
+        int count = 0;
 
-        for(var i=0; i < move.length; i++) {
-            // y軸の範囲
-            if(0<=y-move[i] && y+move[i]<H) {
-                if(S[y-move[i]][x].equals("#")) {
-                    S[y-move[i]][x] = ".";
-                } else {
-                    S[y-move[i]][x] = "#";
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            while ((line = br.readLine()) != null) {
+                String[] product = line.split(csvSplitBy);
+                if (product[0].equals("DRINK") && Integer.parseInt(product[2]) >= 1000) {
+                    sum += Integer.parseInt(product[2]);
+                    count++;
                 }
             }
-            // x軸の範囲
-            if(0<=x-move[i] && x+move[i] < W) {
-                if(S[y][x-move[i]].equals("#")) {
-                    S[y][x-move[i]] = ".";
-                } else {
-                    S[y][x-move[i]] = "#";
-                }
+            if (count > 0) {
+                int average = sum / count;
+                System.out.println("平均金額: " + average + "円");
+            } else {
+                System.out.println("条件に合致する商品がありませんでした。");
             }
-        }
-
-        if(S[y][x].equals("#")) {
-            S[y][x] = ".";
-        } else {
-            S[y][x] = "#";
-        }
-
-        // 二次元配列出力
-        for(var i=0; i < H; i++) {
-            for(var j=0;j < W; j++) {
-                System.out.print(S[i][j]);
-            }
-            System.out.println("");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
+
