@@ -1,33 +1,43 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
-    public static void main(String[] args) {
-        String csvFile = "product-list.csv";
-        String line;
-        String csvSplitBy = ",";
-
-        int sum = 0;
-        int count = 0;
-
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            while ((line = br.readLine()) != null) {
-                String[] product = line.split(csvSplitBy);
-                if (product[0].equals("DRINK") && Integer.parseInt(product[2]) >= 1000) {
-                    sum += Integer.parseInt(product[2]);
-                    count++;
-                }
-            }
-            if (count > 0) {
-                int average = sum / count;
-                System.out.println("平均金額: " + average + "円");
-            } else {
-                System.out.println("条件に合致する商品がありませんでした。");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static void printArray(ArrayList<Integer> intArr) {
+        for(int i=0; i < intArr.size(); i++) {
+            System.out.println(intArr.get(i) + " ");
         }
+        System.out.println();
+    }
+
+    public static void printFixedIntArray(int[] arr) {
+        for(int i=0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        ArrayList<Integer> dArr = new ArrayList<Integer>();
+        dArr.add(2);
+        dArr.add(2);
+        dArr.add(3);
+        dArr.add(4);
+        dArr.add(1);
+        dArr.add(-10);
+        dArr.add(200);
+        printArray(dArr);
+
+        dArr.add(10);
+        dArr.add(340);
+        dArr.add(543);
+        dArr.add(-23);
+        printArray(dArr);
+
+        // 固定配列にコピー
+        int[] fixedArray = new int[dArr.size()];
+        for(int i=0; i < dArr.size(); i++) {
+            fixedArray[i] = dArr.get(i);
+        }
+
+        printFixedIntArray(fixedArray);
     }
 }
 
