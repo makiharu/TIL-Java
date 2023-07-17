@@ -1,43 +1,36 @@
+import java.util.Arrays;
+import java.util.List;
 import java.util.ArrayList;
 
-public class Main {
-    public static void printArray(ArrayList<Integer> intArr) {
-        for(int i=0; i < intArr.size(); i++) {
-            System.out.println(intArr.get(i) + " ");
+class Solution{
+    public static int maxAscilString(String[] stringList){
+        List<Integer> numbers = new ArrayList<>();
+        for(int i=0; i < stringList.length; i++) {
+            int sum = 0;
+            for(int j=0; j< stringList[i].length(); j++) {
+                int code = stringList[i].charAt(j);
+                sum+=code;
+            }
+            numbers.add(sum);
         }
-        System.out.println();
+
+        //　最大値を調べる
+        int index = maxSum(numbers);
+
+        return index;
     }
 
-    public static void printFixedIntArray(int[] arr) {
-        for(int i=0; i < arr.length; i++) {
-            System.out.print(arr[i] + " ");
-        }
-        System.out.println();
-    }
-    public static void main(String[] args) {
-        ArrayList<Integer> dArr = new ArrayList<Integer>();
-        dArr.add(2);
-        dArr.add(2);
-        dArr.add(3);
-        dArr.add(4);
-        dArr.add(1);
-        dArr.add(-10);
-        dArr.add(200);
-        printArray(dArr);
-
-        dArr.add(10);
-        dArr.add(340);
-        dArr.add(543);
-        dArr.add(-23);
-        printArray(dArr);
-
-        // 固定配列にコピー
-        int[] fixedArray = new int[dArr.size()];
-        for(int i=0; i < dArr.size(); i++) {
-            fixedArray[i] = dArr.get(i);
+    private static int maxSum(List<Integer> numbers) {
+        int max = numbers.get(0);
+        int maxNumberIndex = 0;
+        for(int i=0; i < numbers.size(); i++) {
+            if(max < numbers.get(i)) {
+                max = numbers.get(i);
+                maxNumberIndex = i;
+            }
         }
 
-        printFixedIntArray(fixedArray);
+        return maxNumberIndex;
     }
 }
 
