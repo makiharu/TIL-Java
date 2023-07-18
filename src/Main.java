@@ -1,36 +1,39 @@
 import java.util.Arrays;
-import java.util.List;
-import java.util.ArrayList;
 
 class Solution{
-    public static int maxAscilString(String[] stringList){
-        List<Integer> numbers = new ArrayList<>();
-        for(int i=0; i < stringList.length; i++) {
-            int sum = 0;
-            for(int j=0; j< stringList[i].length(); j++) {
-                int code = stringList[i].charAt(j);
-                sum+=code;
-            }
-            numbers.add(sum);
+    public static String maxOfPairSum(int[] arr1, int[] arr2, int x){
+        if(arr1.length == 0) {
+            return "no pair";
         }
 
-        //　最大値を調べる
-        int index = maxSum(numbers);
+        if(arr2.length == 0) {
+            return "no pair";
+        }
 
-        return index;
-    }
-
-    private static int maxSum(List<Integer> numbers) {
-        int max = numbers.get(0);
-        int maxNumberIndex = 0;
-        for(int i=0; i < numbers.size(); i++) {
-            if(max < numbers.get(i)) {
-                max = numbers.get(i);
-                maxNumberIndex = i;
+        int[] newArr = new int[arr1.length * arr2.length];
+        int index = 0;
+        for(int i=0; i< arr1.length; i++) {
+            for(int j=0; j< arr2.length; j++) {
+                newArr[index] = arr1[i] + arr2[j];
+                index++;
             }
         }
 
-        return maxNumberIndex;
+        // xより小さい最大値
+        int max = newArr[0];
+        boolean flg = false;
+        for(int i=0; i < newArr.length; i++) {
+            if(max < newArr[i] && newArr[i] < x) {
+                max = newArr[i];
+                flg = true;
+            }
+        }
+
+        if(flg) {
+            return String.valueOf(max);
+        } else {
+            return "no pair";
+        }
     }
 }
 
